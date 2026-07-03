@@ -14,7 +14,8 @@ The core differentiator vs. Shopify/Wix/WordPress: **the visual builder and the 
 2. **Code Editor** — Monaco (the editor inside VS Code) with full file tree; edits sync back to the visual canvas.
 3. **AI Agent** — chat panel powered by Claude; can read, edit, create files and components with user approval.
 4. **Repo + Deploy** — every project is a Git repo; connect GitHub, one-click deploy via Vercel/Netlify APIs.
-5. **Stack choice** — users pick their project's stack: HTML/CSS/JS, React/Next.js, Vue/Nuxt, optional Node.js backend.
+5. **Stack choice** — users pick their project's stack: HTML/CSS/JS, React/Next.js, Vue/Nuxt, optional Node.js backend. **All three frontend stacks are first-class end targets** (not a "beta" tier) — each ships as a complete, independent canvas ⇄ code ⇄ deploy loop. They are still built one at a time (§5), but none is treated as second-class once shipped.
+6. **Visual Backend Designer** — drag-and-drop database tables, API endpoints, and simple workflows, in addition to the frontend canvas. Same rule as everything else in JODO: it's a projection of real, generated code (SQL migrations, API route handlers) — never a proprietary black box. See §5.1.
 
 ---
 
@@ -111,7 +112,21 @@ Generated components use Tailwind classes (or plain CSS for the HTML stack). Vis
 | Vue 3 / Nuxt | SFCs per section | WebContainers | Vercel/Netlify |
 | + Node.js backend (add-on) | Express/Next API routes, Supabase client wired in | WebContainers | Vercel serverless |
 
-V1 ships HTML + React/Next first-class; Vue enters beta after the sync engine is stable (each stack = its own parser/printer pair, the most expensive part to add).
+Build order stays sequential — HTML first, then React/Next, then Vue/Nuxt (each stack = its own parser/printer pair, the most expensive part to add) — but the target is all three complete and equally supported, not two "real" stacks and one perpetual beta.
+
+### 5.1 Visual Backend Designer
+
+A second canvas, same philosophy as the frontend builder: **drag-and-drop is a projection of real code**, never a proprietary runtime.
+
+| Sub-tool | What it generates |
+|---|---|
+| **Table designer** | Drag-create tables/columns/relations → real SQL migration files (Postgres/Supabase). RLS policies scaffolded per table, editable as SQL. |
+| **API designer** | Drag-create endpoints (REST-style: path, method, request/response shape) → real Node/Next.js API route handlers wired to the generated tables. |
+| **Workflow designer** | Simple trigger → action chains (e.g. "on row insert → send email", "on form submit → call endpoint") → generated as real functions (Supabase Edge Functions / Node handlers), not a hidden automation engine. |
+
+Same escape hatch as the frontend sync engine: anything the visual designer can't represent (complex joins, custom business logic) is still fully editable in the code editor or via the AI agent — the designer just stops rendering that piece visually, same as an unparseable component becomes a "code block" on the frontend canvas (§4.1).
+
+**Sequencing:** this is a substantial subsystem in its own right — it lands after the frontend canvas is solid for at least one stack (originally scoped under the Node backend add-on in Phase 3, now elevated to a named pillar; see roadmap §11).
 
 ---
 
@@ -234,7 +249,7 @@ Next.js app scaffold, Supabase auth + schema, design system, dashboard (create p
 React/Next.js stack (Babel/recast sync engine), WebContainers preview, saved components library, snapshots/rollback, custom domains, Stripe plans, AI `run_preview_check` self-correction.
 
 ### Phase 3 — V1.5+ (months 6–9)
-Vue/Nuxt stack, Node backend add-on + env vars UI, import existing repos, realtime collaboration (Supabase presence), marketplace for community components/templates.
+Vue/Nuxt stack (brought to full parity, not left in beta), **Visual Backend Designer** (table/API/workflow designers, §5.1) + env vars UI, import existing repos, realtime collaboration (Supabase presence), marketplace for community components/templates.
 
 ---
 
@@ -254,3 +269,18 @@ Vue/Nuxt stack, Node backend add-on + env vars UI, import existing repos, realti
 ---
 
 *Next step after approval: Phase 0 scaffold — Next.js repo, Supabase project, design system with the tokens above.*
+
+---
+
+## 14. External Accounts Setup Checklist
+
+None of these existed as of 2026-07-03. Order matches when each is actually needed — no need to create all four before writing code.
+
+| # | Service | Needed for | When to create |
+|---|---|---|---|
+| 1 | **Supabase project** (supabase.com) | Auth, Postgres, storage, realtime | Now — blocks the auth + schema milestone |
+| 2 | **Anthropic API key** (console.anthropic.com) | The real AI agent (Claude Sonnet + Haiku) | When the AI chat panel is built (Phase 1) |
+| 3 | **GitHub App** (github.com/settings/apps) | Push generated projects to real repos | When Git integration is built (§7) |
+| 4 | **Vercel API token** (vercel.com/account/tokens) | Real one-click deploys | When deploy is built (§7.2) |
+
+Each key/URL goes in `.env.local` (already gitignored) — never committed, never pasted into AI chat logs where avoidable. `.env.example` in the repo root documents every variable name without real values.
