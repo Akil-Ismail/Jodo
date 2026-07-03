@@ -59,10 +59,14 @@ export default async function Dashboard({
         {projects && projects.length > 0 && (
           <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((p) => (
-              <div key={p.id} className="rounded-2xl border border-edge bg-surface p-6">
+              <Link
+                key={p.id}
+                href={`/editor/${p.id}`}
+                className="block rounded-2xl border border-edge bg-surface p-6 transition-colors hover:border-accent"
+              >
                 <div className="font-display font-semibold text-ink">{p.name}</div>
                 <div className="mt-1 text-sm text-muted">{p.stack}</div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
