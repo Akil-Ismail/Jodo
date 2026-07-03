@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0118;
+  --surface: #140b26;
+  --edge: #2a1b4a;
+  --accent: #a855f7;
+}
+
+body {
+  background: radial-gradient(ellipse 80% 50% at 50% -10%, #1e0f3d 0%, var(--bg) 60%);
+  color: #f3efff;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(168, 85, 247, 0.4);
+}
+
+.glow-text {
+  text-shadow: 0 0 32px rgba(168, 85, 247, 0.6);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #a855f7, #d946ef);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
