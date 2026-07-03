@@ -1,0 +1,61 @@
+<svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#A855F7"/>
+      <stop offset="1" stop-color="#D946EF"/>
+    </linearGradient>
+    <linearGradient id="word" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="270" y2="0">
+      <stop offset="0" stop-color="#A855F7"/>
+      <stop offset="0.6" stop-color="#C084FC"/>
+      <stop offset="1" stop-color="#D946EF"/>
+    </linearGradient>
+    <radialGradient id="lbg" cx="0.5" cy="0.35" r="0.9">
+      <stop offset="0" stop-color="#160A2E"/>
+      <stop offset="1" stop-color="#0A0118"/>
+    </radialGradient>
+    <filter id="lglow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- dark card background -->
+  <rect x="4" y="4" width="852" height="292" rx="40" fill="url(#lbg)"/>
+  <rect x="4" y="4" width="852" height="292" rx="40" fill="none" stroke="#2A1B4A" stroke-width="2"/>
+
+  <!-- left angle bracket -->
+  <path d="M96 100 L50 150 L96 200" fill="none" stroke="url(#lg1)" stroke-width="15"
+        stroke-linecap="round" stroke-linejoin="round" filter="url(#lglow)"/>
+
+  <!-- house mark (pagoda, emoji-simple) -->
+  <g transform="translate(134,98)" filter="url(#lglow)">
+    <!-- finial -->
+    <circle cx="60" cy="7" r="6" fill="url(#lg1)"/>
+    <!-- swooping roof with upturned eaves -->
+    <path d="M60 16 C 48 34 30 42 10 46 C 4 47.5 4 52 11 52 L109 52 C 116 52 116 47.5 110 46 C 90 42 72 34 60 16 Z"
+          fill="url(#lg1)"/>
+    <!-- body -->
+    <rect x="30" y="58" width="60" height="38" rx="7" fill="none" stroke="#C084FC" stroke-width="9"/>
+    <!-- door -->
+    <rect x="51" y="72" width="18" height="24" rx="8" fill="#D946EF"/>
+  </g>
+
+  <!-- wordmark: Jodo -->
+  <g transform="translate(302,99) scale(1.45)" fill="none" stroke="url(#word)"
+     stroke-width="14" stroke-linecap="round" filter="url(#lglow)">
+    <!-- J -->
+    <path d="M44 4 V38 a20 20 0 0 1 -40 0"/>
+    <!-- o -->
+    <circle cx="98" cy="44" r="20"/>
+    <!-- d (stem + bowl in one path) -->
+    <path d="M178 0 V64 M178 44 a20 20 0 1 1 -40 0 a20 20 0 1 1 40 0"/>
+    <!-- o -->
+    <circle cx="234" cy="44" r="20"/>
+  </g>
+
+  <!-- right angle bracket -->
+  <path d="M756 100 L802 150 L756 200" fill="none" stroke="url(#lg1)" stroke-width="15"
+        stroke-linecap="round" stroke-linejoin=
